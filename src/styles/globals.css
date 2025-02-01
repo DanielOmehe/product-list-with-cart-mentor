@@ -34,3 +34,13 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+
+.product-list-wrapper{
+  display: flex;
+  justify-content: flex-start;
+  gap: -10rem;
+}
+
+.empty-cart-text{
+  color: var(--color-rose-400); 
+}
