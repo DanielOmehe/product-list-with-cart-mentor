@@ -5,7 +5,6 @@ import ProductListHeader from "@/components/header";
 import ProductListContainer from "@/components/productListContainer";
 import ProductListItem from "@/components/product";
 import CartContainer from "@/components/cart";
-import '../styles/globals.css'
 
 const redHatSans = Red_Hat_Text({
   variable: "--font-red-hat-sans",
