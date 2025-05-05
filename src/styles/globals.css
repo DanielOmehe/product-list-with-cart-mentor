@@ -44,3 +44,32 @@ body {
 .empty-cart-text{
   color: var(--color-rose-400); 
 }
+
+.color-rose{
+  color: var(--color-rose-500);
+}
+
+.text-quantity{
+  color: var(--color-red);
+}
+
+.text-color{
+  color: var(--color-rose-400);
+}
+
+.close-btn{
+  border-color: var(--color-rose-300);
+}
+
+.confirm-order{
+  color: white;
+  background-color: var(--color-red);
+}
+
+.text-enjoy{
+  color: var(--color-rose-500);
+}
+
+.product-cart{
+  min-height: 5rem;
+}
