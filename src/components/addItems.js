@@ -16,6 +16,7 @@ const AddItemsToCart = () => {
           src={"/images/icon-decrement-quantity.svg"}
           width={20}
           height={20}
+          alt="minus sign"
         />
       </button>
       <p className="text-lg font-medium">{quantity}</p>
@@ -24,6 +25,7 @@ const AddItemsToCart = () => {
           src={"/images/icon-increment-quantity.svg"}
           width={20}
           height={20}
+          alt="plus sign"
         />
       </button>
     </div>

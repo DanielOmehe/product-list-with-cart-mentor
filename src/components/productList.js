@@ -1,6 +1,6 @@
 const ProductList = ({children})=>{
     return (
-        <section className="">
+        <section className="w-10/12">
             {children}
         </section>
     )
