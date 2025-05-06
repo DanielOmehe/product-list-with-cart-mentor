@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext, createContext } from "react";
 import { Red_Hat_Text } from "next/font/google";
 import ProductList from "@/components/productList";
 import ProductListHeader from "@/components/header";
@@ -7,6 +7,7 @@ import ProductListItem from "@/components/product";
 import CartContainer from "@/components/cart";
 import OrderSummary from "@/components/orderSummary";
 import { CartItem, CartBodyEmpty, CartBodySelected } from "@/components/cart";
+import useProductStore from "@/hooks/useProductStore";
 
 const redHatSans = Red_Hat_Text({
   variable: "--font-red-hat-sans",
@@ -14,62 +15,15 @@ const redHatSans = Red_Hat_Text({
 });
 
 export default function Home() {
-  const [products, setProducts] = useState([]);
-  const [cartItems, setCartItems] = useState([]);
-  const [confirmOrder, setConfirmOrder] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
 
   const confirmCartOrder = () => setConfirmOrder(true);
   const closeCartOrder = () => setConfirmOrder(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768);
-    };
-
-    handleResize(); // Set initial image
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const startNewOrder = () => {
-    setCartItems([]);
-    setConfirmOrder(false);
-  };
-
-  const addProductToCart = (product, indx) => {
-    setCartItems((prevCartItems) => {
-      const newCartItems = [
-        ...prevCartItems,
-        {
-          ...product,
-          id: indx,
-          quantity: 1,
-          total_price: product.quantity + product.price,
-        },
-      ];
-
-      return newCartItems;
-    });
-  };
-
-  const incrementItemQuantity = (id) => {
-    setCartItems((prevCartItems) =>
-      prevCartItems.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
-  };
-
-  const decrementItemQuantity = (id) => {
-    setCartItems((prevCartItems) =>
-      prevCartItems
-        .map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-        )
-        .filter((item) => item.quantity > 0)
-    );
-  };
+  const products = useProductStore((state) => state.products);
+  const setProducts = useProductStore(({ setProducts }) => setProducts);
+  const cartItems = useProductStore(( {cartItems} ) => cartItems);
+  const confirmOrder = useProductStore((state) => state.confirmOrder);
 
   useEffect(() => {
     const fetchData = () => {
@@ -81,6 +35,14 @@ export default function Home() {
         .then((data) => setProducts(data));
     };
     fetchData();
+
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    handleResize(); // Set initial image
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
@@ -99,16 +61,16 @@ export default function Home() {
                 price={product.price}
                 key={indx.toString()}
                 indx={indx}
-                addToCart={() => addProductToCart(product, indx)}
-                cartItems={cartItems}
-                increaseProductQuantity={() => incrementItemQuantity(indx)}
-                decreaseProductQuantity={() => decrementItemQuantity(indx)}
+                // addToCart={() => addProductToCart(product, indx)}
+                // cartItems={cartItems}
+                // increaseProductQuantity={() => incrementItemQuantity(indx)}
+                // decreaseProductQuantity={() => decrementItemQuantity(indx)}
               />
             );
           })}
         </ProductListContainer>
       </ProductList>
-      <CartContainer cartItems={cartItems}>
+      <CartContainer>
         <ProductListHeader variant={"text-red-600"}>
           Your Cart (<>{cartItems.length}</>)
         </ProductListHeader>
@@ -130,9 +92,9 @@ export default function Home() {
       <>
         {confirmOrder ? (
           <OrderSummary
-            cartItems={cartItems}
-            orderState={closeCartOrder}
-            startNewOrder={startNewOrder}
+            // cartItems={cartItems}
+            // orderState={closeCartOrder}
+            // startNewOrder={startNewOrder}
           />
         ) : (
           ""

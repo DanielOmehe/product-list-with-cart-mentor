@@ -1,3 +1,4 @@
+import useProductStore from "@/hooks/useProductStore";
 import Image from "next/image";
 
 const ProductListItem = ({
@@ -6,13 +7,14 @@ const ProductListItem = ({
   name,
   title,
   price,
-  addToCart,
-  cartItems,
-  increaseProductQuantity,
-  decreaseProductQuantity,
 }) => {
-  const isSelected = cartItems.some((item) => item.id === indx);
-  const itemInCart = cartItems.find(item => item.id === indx);
+
+  const cartItems = useProductStore((state) => state.cartItems),
+  addToCart = useProductStore(state => state.addProductToCart),
+  increaseProductQuantity = useProductStore(({ incrementItemQuantity }) => incrementItemQuantity),
+  decreaseProductQuantity = useProductStore(({ decrementItemQuantity }) => decrementItemQuantity),
+  isSelected = cartItems.some((item) => item.id === indx),
+  itemInCart = cartItems.find(item => item.id === indx);
 
   const formatPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -29,10 +31,10 @@ const ProductListItem = ({
       />
       <>
         {isSelected ? (
-          <div className="flex items-center relative w-3/4 md:w-3/4 md:ml-12 text-base justify-between py-2.5 px-4 gap-2 z-10 ml-8 -mt-5 bg-red-500 rounded-full text-white 2xl:border-black 2xl-border-2">
+          <div className="flex items-center relative w-3/4 md:w-3/4 md:ml-12 text-base justify-between py-2.5 px-4 gap-2 z-10 ml-10 -mt-5 bg-red-500 rounded-full text-white 2xl:border-black 2xl-border-2">
             <button
               className="border-2 rounded-full px-1.5 py-3 border-white"
-              onClick={decreaseProductQuantity}
+              onClick={() => decreaseProductQuantity(indx)}
             >
               <Image
                 src={"/images/icon-decrement-quantity.svg"}
@@ -44,7 +46,7 @@ const ProductListItem = ({
             <p className="text-lg font-medium">{itemInCart.quantity}</p>
             <button
               className="border-2 rounded-full p-1.5 border-white"
-              onClick={increaseProductQuantity}
+              onClick={() => increaseProductQuantity(indx)}
             >
               <Image
                 src={"/images/icon-increment-quantity.svg"}
@@ -56,16 +58,16 @@ const ProductListItem = ({
           </div>
         ) : (
           <button
-            className="flex items-center relative w-4/5 text-base justify-center py-2.5 px-8 gap-2 z-10 ml-5 -mt-5 bg-white rounded-full border-2 border-gray-300"
-            onClick={addToCart}
+            className="flex items-center relative w-4/5 text-base justify-center py-2.5 px-8 gap-2 z-10 ml-7 -mt-5 bg-white rounded-full hover:border-2 hover:border-red-500 hover:text-red-500 border-2 border-gray-300"
+            onClick={() => addToCart({ path, name, title, price }, indx)}
           >
             <Image
               src={"/images/icon-add-to-cart.svg"}
               width={25}
               height={25}
               alt="cart"
-            />{" "}
-            <h3 className="font-semibold text-base">Add to Cart</h3>{" "}
+            />
+            <h3 className="font-semibold text-gray-700 text-base">Add to Cart</h3>
           </button>
         )}
       </>
@@ -78,4 +80,4 @@ const ProductListItem = ({
   );
 };
 
-export default ProductListItem;
+export default ProductListItem

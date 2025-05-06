@@ -10,6 +10,7 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: '#FF5733',
       },
       screens: {
         "2xl": { max: "1535px" },

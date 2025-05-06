@@ -1,7 +1,12 @@
 import Image from "next/image";
 import ProductListHeader from "./header";
+import useProductStore from "@/hooks/useProductStore";
 
-const OrderSummary = ({ cartItems, orderState, startNewOrder }) => {
+const OrderSummary = () => {
+  
+  const startNewOrder = useProductStore((state) => state.startNewOrder);
+  const cartItems = useProductStore((state) => state.cartItems);
+
   const CalculateTotalPrice = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -18,7 +23,7 @@ const OrderSummary = ({ cartItems, orderState, startNewOrder }) => {
 
   return (
     <div
-      onClick={orderState}
+      // onClick={orderState}
       className="absolute py-52 z-20 w-full min-h-screen bg-black bg-opacity-35 top-0 left-0 flex items-center justify-center"
     >
       <div
