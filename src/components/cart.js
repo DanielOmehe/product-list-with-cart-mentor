@@ -12,7 +12,7 @@ const formatNumber = (number) => {
 
 const CartContainer = ({ children }) => {
   return (
-    <div className="md:w-full w-1/3 h-auto product-cart p-6 bg-white rounded-xl">
+    <div className="w-full lg:w-1/3 h-auto product-cart p-6 bg-white rounded-xl">
       {children}
     </div>
   );

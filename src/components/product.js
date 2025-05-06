@@ -1,27 +1,29 @@
 import useProductStore from "@/hooks/useProductStore";
 import Image from "next/image";
 
-const ProductListItem = ({
-  indx,
-  path,
-  name,
-  title,
-  price,
-}) => {
+const ProductListItem = (product) => {
+
+  const {
+    indx,
+    path,
+    name,
+    title,
+    price,
+  } = product;
 
   const cartItems = useProductStore((state) => state.cartItems),
-  addToCart = useProductStore(state => state.addProductToCart),
-  increaseProductQuantity = useProductStore(({ incrementItemQuantity }) => incrementItemQuantity),
-  decreaseProductQuantity = useProductStore(({ decrementItemQuantity }) => decrementItemQuantity),
-  isSelected = cartItems.some((item) => item.id === indx),
-  itemInCart = cartItems.find(item => item.id === indx);
+    addToCart = useProductStore(state => state.addProductToCart),
+    increaseProductQuantity = useProductStore(({ incrementItemQuantity }) => incrementItemQuantity),
+    decreaseProductQuantity = useProductStore(({ decrementItemQuantity }) => decrementItemQuantity),
+    isSelected = cartItems.some((item) => item.id === indx),
+    itemInCart = cartItems.find(item => item.id === indx);
 
   const formatPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   }).format(price);
   return (
-    <div className="relative">
+    <div className="relative w-full lg:fit-content">
       <Image
         className={`rounded-xl ${isSelected ? "border-2 border-red-500" : ""}`}
         src={path}
@@ -59,7 +61,7 @@ const ProductListItem = ({
         ) : (
           <button
             className="flex items-center relative w-4/5 text-base justify-center py-2.5 px-8 gap-2 z-10 ml-7 -mt-5 bg-white rounded-full hover:border-2 hover:border-red-500 hover:text-red-500 border-2 border-gray-300"
-            onClick={() => addToCart({ path, name, title, price }, indx)}
+            onClick={() => addToCart(product, indx)}
           >
             <Image
               src={"/images/icon-add-to-cart.svg"}

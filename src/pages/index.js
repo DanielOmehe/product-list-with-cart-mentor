@@ -21,8 +21,12 @@ export default function Home() {
   const closeCartOrder = () => setConfirmOrder(false);
 
   const products = useProductStore((state) => state.products);
+  console.log(products);
+  
   const setProducts = useProductStore(({ setProducts }) => setProducts);
   const cartItems = useProductStore(( {cartItems} ) => cartItems);
+  console.log(cartItems);
+  
   const confirmOrder = useProductStore((state) => state.confirmOrder);
 
   useEffect(() => {
@@ -47,7 +51,7 @@ export default function Home() {
 
   return (
     <main
-      className={`${redHatSans.variable} py-8 px-12 py-8 px-20 py-12 px-12 py-8 px-16 gap-8 relative product-list-wrapper py-16 px-32 bg-red-50 min-h-screen items-start flex justify-center w-full box-border 2xl:border-black 2xl:border-2 font-[family-name:var(--font-red-hat-sans)]`}
+      className={`${redHatSans.variable} py-8 px-8 md:px-20 md:py-12 gap-8 relative product-list-wrapper py-16 lg:px-32 bg-red-50 min-h-screen items-center lg:items-start flex flex-col lg:flex-row justify-center w-full box-borderfont-[family-name:var(--font-red-hat-sans)]`}
     >
       <ProductList>
         <ProductListHeader>Desserts</ProductListHeader>
