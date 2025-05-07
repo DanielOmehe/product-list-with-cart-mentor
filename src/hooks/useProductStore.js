@@ -1,4 +1,3 @@
-// useProductStore.js
 import { create } from "zustand";
 
 const useProductStore = create((set) => ({
@@ -54,6 +53,11 @@ const useProductStore = create((set) => ({
         )
         .filter((item) => item.quantity > 0),
     })),
+
+  showCart: false,
+  toggleCart: (value) => {
+    set(() => ({ showCart: value }))
+  },
 
   // Order confirmation
   confirmOrder: false,

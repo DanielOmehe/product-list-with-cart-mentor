@@ -6,13 +6,21 @@ const formatNumber = (number) => {
     style: "currency",
     currency: "USD",
   }).format(number);
-
   return formattedNumber;
 };
 
 const CartContainer = ({ children }) => {
+  const showCart = useProductStore((state) => state.showCart);
   return (
-    <div className="w-full lg:w-1/3 h-auto product-cart p-6 bg-white rounded-xl">
+    <div className={`
+      w-full lg:w-1/3 h-auto p-6 bg-white rounded-xl product-cart z-50
+      ${showCart ? `
+        fixed inset-0 mx-auto my-auto max-w-md shadow-lg
+        lg:static lg:inset-auto lg:max-w-full h-min
+      ` : `
+        hidden md:hidden lg:block
+      `}
+    `}>
       {children}
     </div>
   );

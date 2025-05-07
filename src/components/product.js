@@ -25,7 +25,7 @@ const ProductListItem = (product) => {
   return (
     <div className="relative w-full lg:fit-content">
       <Image
-        className={`rounded-xl ${isSelected ? "border-2 border-red-500" : ""}`}
+        className={`rounded-xl w-full ${isSelected ? "border-2 border-red-500" : ""}`}
         src={path}
         width={400}
         height={400}
@@ -33,7 +33,7 @@ const ProductListItem = (product) => {
       />
       <>
         {isSelected ? (
-          <div className="flex items-center relative w-3/4 md:w-3/4 md:ml-12 text-base justify-between py-2.5 px-4 gap-2 z-10 ml-10 -mt-5 bg-red-500 rounded-full text-white 2xl:border-black 2xl-border-2">
+          <div className="flex items-center relative w-4/5 text-base justify-between py-2.5 px-4 gap-2 z-10 mx-auto -mt-5 bg-red-500 rounded-full text-white 2xl:border-gray-200 2xl-border-2">
             <button
               className="border-2 rounded-full px-1.5 py-3 border-white"
               onClick={() => decreaseProductQuantity(indx)}
@@ -60,7 +60,7 @@ const ProductListItem = (product) => {
           </div>
         ) : (
           <button
-            className="flex items-center relative w-4/5 text-base justify-center py-2.5 px-8 gap-2 z-10 ml-7 -mt-5 bg-white rounded-full hover:border-2 hover:border-red-500 hover:text-red-500 border-2 border-gray-300"
+            className="flex items-center relative w-4/5 text-base justify-center py-2.5 px-4 gap-2 z-10 mx-auto -mt-5 bg-red-500 rounded-full bg-white hover:border-2 hover:border-red-500 hover:text-red-500 border-2 border-gray-300"
             onClick={() => addToCart(product, indx)}
           >
             <Image

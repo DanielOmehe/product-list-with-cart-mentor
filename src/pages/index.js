@@ -17,17 +17,16 @@ const redHatSans = Red_Hat_Text({
 export default function Home() {
   const [isDesktop, setIsDesktop] = useState(false);
 
-  const confirmCartOrder = () => setConfirmOrder(true);
-  const closeCartOrder = () => setConfirmOrder(false);
+  // const confirmCartOrder = () => setConfirmOrder(true);
+  // const closeCartOrder = () => setConfirmOrder(false);
 
   const products = useProductStore((state) => state.products);
-  console.log(products);
   
   const setProducts = useProductStore(({ setProducts }) => setProducts);
   const cartItems = useProductStore(( {cartItems} ) => cartItems);
-  console.log(cartItems);
   
   const confirmOrder = useProductStore((state) => state.confirmOrder);
+  const toggleCart = useProductStore((state) => state.toggleCart)
 
   useEffect(() => {
     const fetchData = () => {
@@ -51,10 +50,15 @@ export default function Home() {
 
   return (
     <main
-      className={`${redHatSans.variable} py-8 px-8 md:px-20 md:py-12 gap-8 relative product-list-wrapper py-16 lg:px-32 bg-red-50 min-h-screen items-center lg:items-start flex flex-col lg:flex-row justify-center w-full box-borderfont-[family-name:var(--font-red-hat-sans)]`}
+      className={`${redHatSans.variable} py-8 px-8 md:px-20 md:py-12 py-12 lg:px-24 gap-8 relative product-list-wrapper bg-red-50 min-h-screen items-center lg:items-start flex flex-col lg:flex-row justify-center w-full box-borderfont-[family-name:var(--font-red-hat-sans)]`}
     >
       <ProductList>
-        <ProductListHeader>Desserts</ProductListHeader>
+        <ProductListHeader>
+          <h1>Desserts</h1>
+          <button className="p-3 bg-white rounded block lg:hidden" onClick={()=>toggleCart(true)}>
+            <img alt="cart-icon" src="/images/icon-add-to-cart.svg" />
+          </button>
+        </ProductListHeader>
         <ProductListContainer>
           {products.map((product, indx) => {
             return (
@@ -65,23 +69,22 @@ export default function Home() {
                 price={product.price}
                 key={indx.toString()}
                 indx={indx}
-                // addToCart={() => addProductToCart(product, indx)}
-                // cartItems={cartItems}
-                // increaseProductQuantity={() => incrementItemQuantity(indx)}
-                // decreaseProductQuantity={() => decrementItemQuantity(indx)}
               />
             );
           })}
         </ProductListContainer>
       </ProductList>
       <CartContainer>
-        <ProductListHeader variant={"text-red-600"}>
-          Your Cart (<>{cartItems.length}</>)
+        <ProductListHeader variant={"text-red-600 flex items-center justify-between"}>
+          <h1>Your Cart (<>{cartItems.length}</>)</h1>
+          <button className="p-3 bg-white rounded block lg:hidden" onClick={()=>toggleCart(false)}>
+            <img src="/images/icon-remove-item.svg" alt="remove-icon" />
+          </button>
         </ProductListHeader>
         <>
           {cartItems.length > 0 ? (
             <CartBodySelected
-              confirmOrder={confirmCartOrder}
+              confirmOrder={confirmOrder}
               cartItems={cartItems}
             >
               {cartItems.map((item, indx) => {
@@ -95,11 +98,7 @@ export default function Home() {
       </CartContainer>
       <>
         {confirmOrder ? (
-          <OrderSummary
-            // cartItems={cartItems}
-            // orderState={closeCartOrder}
-            // startNewOrder={startNewOrder}
-          />
+          <OrderSummary />
         ) : (
           ""
         )}
